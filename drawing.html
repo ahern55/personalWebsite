@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="icon" type="image/x-icon" href="block-O-icon.png">
+	<style>
+
+
+		body {
+			font-family: arial;
+			text-align: center;
+		}
+
+
+
+		.header {
+			font-size: 40px;
+		}
+
+		.header2 {
+			font-size: 32px;
+		}
+
+		.draw {
+			background: #f8f8f8;
+			padding: 0;
+			margin: 0 auto;
+			margin-bottom: 1rem;
+			display: block;
+			width: 800px;
+			height: 400px;
+			cursor: crosshair;
+		}
+
+
+		.buttonDiv {
+			text-align: center;
+		}
+
+		.button {
+			background-color: white;
+			color: black;
+			border: none;
+			font-size: 24px;
+			transition-duration: 0.4s;
+		}
+
+			.button:hover {
+				color: blue;
+			}
+
+
+		.jason {
+			text-align: right;
+			font-size: 20pt;
+			margin-top: 1%;
+			margin-right: 1%
+		}
+
+
+		a {
+			text-decoration: none;
+			color: black;
+		}
+	</style>
+	<meta charset="ISO-8859-1">
+	<title>Drawing</title>
+</head>
+<body>
+<h1 class=header id=test><a href=web.html>Move your mouse to draw!</a></h1>
+<h2 class=header2 id=change>Click to start or stop drawing.</h2>
+
+<canvas class=draw id=canvas></canvas>
+
+<div class=buttonDiv>
+<input class=button type="button" value="Clear" onclick="clearB();" />
+</div>
+
+<div class=jason>By jason</div>
+
+
+
+
+<script>
+//Canvas
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+var cnvBox = document.getElementById('canvas').getBoundingClientRect();
+
+var height = canvas.height = window.innerHeight;
+var width = canvas.width = window.innerWidth;
+
+scaleX = canvas.width / cnvBox.width,    // relationship bitmap vs. element for X
+scaleY = canvas.height / cnvBox.height;  // relationship bitmap vs. element for Y
+
+
+var mouseClicked = false, mouseReleased = true;
+
+
+document.addEventListener("mousemove", onMouseMove, false);
+document.addEventListener("click", onMouseClick, false);
+
+
+
+function onMouseClick(e) {
+	mouseClicked = !mouseClicked;
+}
+
+
+
+function onMouseMove(e) {
+   
+	
+	if (mouseClicked){
+		
+		var x = (e.clientX - cnvBox.left) * scaleX;
+		var y = (e.clientY - cnvBox.top) * scaleY;
+		
+		drawArc(x, y);
+		
+		
+	} else document.getElementById('change').style.color='black';
+}
+
+
+function drawArc(x, y){
+	document.getElementById('change').style.color='green';
+	context.beginPath();
+	context.arc(x, y, 3, 0, Math.PI * 2, false);
+	context.lineWidth = 5;
+	context.strokeStyle = getRandomColor();
+	context.stroke();
+}
+
+
+
+
+
+function getRandomColor(){
+	var chars = "0123456789ABCDEF";
+	var color = "#";
+	for (var i = 0; i < 6; i++){
+		color += chars[Math.floor(Math.random() * 16)];
+	}
+	
+	return color;
+}
+
+
+function clearB(){
+	
+	context.beginPath();
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	mouseClicked = !mouseClicked;
+}
+
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" type="image/x-icon" href="block-O-icon.png">
+	<title>Corn Game</title>
+
+	<style>
+
+
+		body {
+			font-family: arial;
+			text-align: center;
+		}
+
+
+		.head {
+			font-size: 50px;
+			color: black;
+			background: white;
+			width: 100%;
+			text-align: center;
+			font-variant: small-caps;
+			font-weight: bold;
+		}
+
+		.all {
+			width: 100%;
+			background-color: white;
+			height: 450px
+		}
+
+		#board {
+			border: 1px solid black;
+			background: url(https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80);
+			background-size: cover;
+			height: 95%;
+			width: 35%;
+			margin-left: 32.5%;
+		}
+
+		.broccoli {
+			background: url(broccoli.png);
+			background-size: cover;
+			width: 26%;
+			height: 26%;
+			padding: 3%;
+			margin: 3%;
+			float: left;
+			padding: 0px;
+		}
+
+		.hidden {
+			display: none;
+		}
+
+		.visible {
+			display: block;
+		}
+
+		.corn {
+			background: url(corn.png);
+			background-size: cover;
+		}
+
+		.jason {
+			text-align: right;
+			font-size: 20pt;
+			margin-top: 1%;
+			margin-right: 1%
+		}
+
+		.youScored {
+			text-align: left;
+			font-size: 18pt;
+			color: black;
+			background: white;
+			width: 100%;
+			font-variant: small-caps;
+			font-weight: bold;
+		}
+
+		#score {
+			text-align: left;
+			font-size: 36pt;
+			color: green;
+			background: white;
+			width: 100%;
+			font-variant: small-caps;
+			font-weight: bold;
+			margin-left: 3.5%;
+			float: left;
+			width: 50%;
+		}
+
+		.rules {
+			background-color: white;
+			font-weight: bold;
+			text-align: center;
+			width: 100%;
+		}
+
+		.button {
+			background-color: white;
+			color: black;
+			border: 2px solid gray;
+			font-size: 24px;
+			transition-duration: 0.4s
+		}
+
+			.button:hover {
+				background-color: gray;
+				color: white;
+			}
+
+		.buttonHead {
+			text-align: center;
+			background: white;
+		}
+
+		hr {
+			width: 80%;
+			color: black;
+		}
+
+		a {
+			text-decoration: none;
+			color: black;
+		}
+	</style>
+
+</head>
+
+<body><!-- and script-->
+ <div class=head><a href=web.html>Click the corn!</a></div>
+ <div class=jason>By jason</div>
+ <hr>
+  
+ <div class=rules>
+  <br>How to Play:<br>
+  Click on the corn. Every corn click is one point.<br>
+  Do not click on the broccoli. Clicking on the broccoli ends the game.<br>
+  Your score will appear when the game is over. <br>
+  <br>
+  </div>
+ <div class=all>
+  <div class=buttonHead>
+  <input class=button type="button" value="PLAY GAME" onclick="startGame()"/><br><br>
+  </div>
+  <div id="board">
+   <div class="broccoli"></div>
+   <div class="broccoli"></div>
+   <div class="broccoli"></div>
+   <div class="broccoli"></div>
+   <div class="broccoli"></div>
+   <div class="broccoli"></div>
+   <div class="broccoli"></div>
+   <div class="broccoli"></div>
+   <div class="broccoli"></div>
+   </div>
+ <div class=youScored>You Scored:<br></div>
+ <div id=score></div>
+ </div>
+
+ <script>
+  
+  var loops;
+  var broccoliVisible;
+  var gameScore;
+  var quit;
+ 
+ 
+  function startGame(){
+	  
+	  loops=0;
+	  broccoliVisible=false;
+	  gameScore=0;
+	  quit = false;
+	  document.getElementById("score").innerHTML="";
+	  
+	  gameLoop()}
+
+  
+
+  function gameLoop(){
+	  
+	   
+	broccoliVisible=!broccoliVisible;
+	createBroccoli();
+	loops++;
+   
+	if(!quit){
+		 setTimeout(gameLoop, 1000);}
+	else{
+		 document.getElementById("score").innerHTML=gameScore;}}
+  
+  function createBroccoli(){
+	  var board= document.getElementById("board");
+	  var classToSet= broccoliVisible ? "broccoli visible" : "broccoli hidden";
+	  for(var index=0; index<9; index++){
+		  board.children[index].className=classToSet;
+		  board.children[index].innerHTML= "";
+		  board.children[index].onclick=function(){
+			  quit = true;
+			  }
+	   }
+  var randomNumber= Math.floor(Math.random() * 9) + 1;
+	  board.children[randomNumber-1].innerHTML= "";
+	  board.children[randomNumber-1].onclick=function(){
+		  gameScore++;
+	  }
+	  board.children[randomNumber-1].className= classToSet + " corn";
+	  }
+  
+ </script>
+ </body>
+</html>
